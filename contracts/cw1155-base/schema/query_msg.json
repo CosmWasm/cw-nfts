@@ -1,0 +1,169 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "QueryMsg",
+  "oneOf": [
+    {
+      "description": "Returns the current balance of the given address, 0 if unset and error if token does not exist Return type: BalanceOfResponse",
+      "type": "object",
+      "required": [
+        "balance_of"
+      ],
+      "properties": {
+        "balance_of": {
+          "type": "object",
+          "required": [
+            "owner",
+            "token_id"
+          ],
+          "properties": {
+            "owner": {
+              "type": "string"
+            },
+            "token_id": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "List all operators that can access all of the owner's tokens Return type: `ApprovedForAllResponse`",
+      "type": "object",
+      "required": [
+        "approved_for_all"
+      ],
+      "properties": {
+        "approved_for_all": {
+          "type": "object",
+          "required": [
+            "owner"
+          ],
+          "properties": {
+            "include_expired": {
+              "description": "unset or false will filter out expired items, you must set to true to see them",
+              "type": [
+                "boolean",
+                "null"
+              ]
+            },
+            "limit": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint32",
+              "minimum": 0.0
+            },
+            "owner": {
+              "type": "string"
+            },
+            "start_after": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "Total number of tokens issued",
+      "type": "object",
+      "required": [
+        "num_tokens"
+      ],
+      "properties": {
+        "num_tokens": {
+          "type": "object",
+          "required": [
+            "token_id"
+          ],
+          "properties": {
+            "token_id": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "With MetaData Extension. Returns top-level metadata about the contract: `ContractInfoResponse`",
+      "type": "object",
+      "required": [
+        "contract_info"
+      ],
+      "properties": {
+        "contract_info": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "With MetaData Extension. Returns metadata about one particular token, based on *ERC1155 Metadata JSON Schema* but directly from the contract: `TokenInfoResponse`",
+      "type": "object",
+      "required": [
+        "token_info"
+      ],
+      "properties": {
+        "token_info": {
+          "type": "object",
+          "required": [
+            "token_id"
+          ],
+          "properties": {
+            "token_id": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "With Enumerable extension. Requires pagination. Lists all token_ids controlled by the contract. Return type: TokensResponse.",
+      "type": "object",
+      "required": [
+        "all_tokens"
+      ],
+      "properties": {
+        "all_tokens": {
+          "type": "object",
+          "properties": {
+            "limit": {
+              "type": [
+                "integer",
+                "null"
+              ],
+              "format": "uint32",
+              "minimum": 0.0
+            },
+            "start_after": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "minter"
+      ],
+      "properties": {
+        "minter": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}
