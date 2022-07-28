@@ -1,5 +1,4 @@
-use cosmwasm_std::Uint128;
-use cw721::CustomMsg;
+use cosmwasm_std::{CustomMsg, Uint128};
 use schemars::JsonSchema;
 use serde::{Deserialize, Serialize};
 

@@ -108,9 +108,17 @@ pub struct NumTokensResponse {
 }
 
 #[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema, Debug)]
-pub struct ContractInfoResponse {
+pub struct ContractInfoResponse<T> {
+    /// Name of the NFT contract
     pub name: String,
+    /// Part of the OG ERC721 standard even though no one uses it
     pub symbol: String,
+    /// Universal resource identifier for this NFT Collection
+    /// Should point to a JSON file that conforms to contract level metadata
+    /// schema: https://docs.opensea.io/docs/contract-level-metadata
+    pub collection_uri: Option<String>,
+    /// Metadata extension for custom on-chain metadata
+    pub metadata: T,
 }
 
 #[derive(Serialize, Deserialize, Clone, PartialEq, JsonSchema, Debug)]

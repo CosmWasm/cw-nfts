@@ -14,6 +14,7 @@ pub struct Config {
     pub unit_price: Uint128,
     pub name: String,
     pub symbol: String,
+    pub collection_uri: String,
     pub token_uri: String,
     pub extension: Extension,
     pub unused_token_id: u32,

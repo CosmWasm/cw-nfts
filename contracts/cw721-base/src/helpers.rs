@@ -11,19 +11,22 @@ use serde::de::DeserializeOwned;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug, PartialEq)]
-pub struct Cw721Contract<Q: CustomMsg, E: CustomMsg>(
+pub struct Cw721Contract<QueryExt: CustomMsg, ExecuteExt: CustomMsg, InstantiateExt: CustomMsg>(
     pub Addr,
-    pub PhantomData<Q>,
-    pub PhantomData<E>,
+    pub PhantomData<QueryExt>,
+    pub PhantomData<ExecuteExt>,
+    pub PhantomData<InstantiateExt>,
 );
 
 #[allow(dead_code)]
-impl<Q: CustomMsg, E: CustomMsg> Cw721Contract<Q, E> {
+impl<QueryExt: CustomMsg, ExecuteExt: CustomMsg, InstantiateExt: CustomMsg + DeserializeOwned>
+    Cw721Contract<QueryExt, ExecuteExt, InstantiateExt>
+{
     pub fn addr(&self) -> Addr {
         self.0.clone()
     }
 
-    pub fn call<T: Serialize>(&self, msg: ExecuteMsg<T, E>) -> StdResult<CosmosMsg> {
+    pub fn call<T: Serialize>(&self, msg: ExecuteMsg<T, ExecuteExt>) -> StdResult<CosmosMsg> {
         let msg = to_binary(&msg)?;
         Ok(WasmMsg::Execute {
             contract_addr: self.addr().into(),
@@ -36,7 +39,7 @@ impl<Q: CustomMsg, E: CustomMsg> Cw721Contract<Q, E> {
     pub fn query<T: DeserializeOwned>(
         &self,
         querier: &QuerierWrapper,
-        req: QueryMsg<Q>,
+        req: QueryMsg<QueryExt>,
     ) -> StdResult<T> {
         let query = WasmQuery::Smart {
             contract_addr: self.addr().into(),
@@ -116,7 +119,10 @@ impl<Q: CustomMsg, E: CustomMsg> Cw721Contract<Q, E> {
     }
 
     /// With metadata extension
-    pub fn contract_info(&self, querier: &QuerierWrapper) -> StdResult<ContractInfoResponse> {
+    pub fn contract_info(
+        &self,
+        querier: &QuerierWrapper,
+    ) -> StdResult<ContractInfoResponse<InstantiateExt>> {
         let req = QueryMsg::ContractInfo {};
         self.query(querier, req)
     }

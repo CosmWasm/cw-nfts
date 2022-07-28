@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ContractInfoResponse_for_Empty",
+  "type": "object",
+  "required": [
+    "metadata",
+    "name",
+    "symbol"
+  ],
+  "properties": {
+    "collection_uri": {
+      "description": "Universal resource identifier for this NFT Collection Should point to a JSON file that conforms to contract level metadata schema: https://docs.opensea.io/docs/contract-level-metadata",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "metadata": {
+      "description": "Metadata extension for custom on-chain metadata",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Empty"
+        }
+      ]
+    },
+    "name": {
+      "description": "Name of the NFT contract",
+      "type": "string"
+    },
+    "symbol": {
+      "description": "Part of the OG ERC721 standard even though no one uses it",
+      "type": "string"
+    }
+  },
+  "definitions": {
+    "Empty": {
+      "description": "An empty struct that serves as a placeholder in different places, such as contracts that don't set a custom message.\n\nIt is designed to be expressable in correct JSON and JSON Schema but contains no meaningful data. Previously we used enums without cases, but those cannot represented as valid JSON Schema (https://github.com/CosmWasm/cosmwasm/issues/451)",
+      "type": "object"
+    }
+  }
+}

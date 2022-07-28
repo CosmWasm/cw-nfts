@@ -3,6 +3,7 @@
   "title": "InstantiateMsg",
   "type": "object",
   "required": [
+    "collection_uri",
     "cw20_address",
     "max_tokens",
     "name",
@@ -13,6 +14,9 @@
     "unit_price"
   ],
   "properties": {
+    "collection_uri": {
+      "type": "string"
+    },
     "cw20_address": {
       "$ref": "#/definitions/Addr"
     },
