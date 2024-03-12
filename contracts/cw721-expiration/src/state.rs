@@ -1,4 +1,4 @@
-use cosmwasm_std::{CustomMsg, Timestamp};
+use cosmwasm_std::Timestamp;
 use cw721_base::Cw721Contract;
 use cw_storage_plus::{Item, Map};
 use serde::de::DeserializeOwned;
