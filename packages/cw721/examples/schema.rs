@@ -11,7 +11,10 @@ use cw721::{
         OperatorsResponse, OwnerOfResponse, TokensResponse,
     },
     receiver::Cw721ReceiveMsg,
-    state::{CollectionInfo, DefaultOptionCollectionInfoExtension, DefaultOptionMetadataExtension},
+    state::{
+        CollectionMetadata, DefaultOptionCollectionMetadataExtension,
+        DefaultOptionNftMetadataExtension,
+    },
 };
 fn main() {
     let mut out_dir = current_dir().unwrap();
@@ -20,34 +23,34 @@ fn main() {
     remove_schemas(&out_dir).unwrap();
 
     export_schema_with_title(
-        &schema_for!(Cw721InstantiateMsg<DefaultOptionCollectionInfoExtension>),
+        &schema_for!(Cw721InstantiateMsg<DefaultOptionCollectionMetadataExtension>),
         &out_dir,
         "InstantiateMsg",
     );
     export_schema_with_title(
         &schema_for!(
             Cw721ExecuteMsg::<
-                DefaultOptionMetadataExtension,
+                DefaultOptionNftMetadataExtension,
                 Empty,
-                DefaultOptionCollectionInfoExtension,
+                DefaultOptionCollectionMetadataExtension,
             >
         ),
         &out_dir,
         "ExecuteMsg",
     );
     export_schema_with_title(
-        &schema_for!(Cw721QueryMsg<Empty, DefaultOptionCollectionInfoExtension>),
+        &schema_for!(Cw721QueryMsg<Empty, DefaultOptionCollectionMetadataExtension>),
         &out_dir,
         "QueryMsg",
     );
     export_schema(&schema_for!(Cw721ReceiveMsg), &out_dir);
     export_schema_with_title(
-        &schema_for!(NftInfoResponse<DefaultOptionMetadataExtension>),
+        &schema_for!(NftInfoResponse<DefaultOptionNftMetadataExtension>),
         &out_dir,
         "NftInfoResponse",
     );
     export_schema_with_title(
-        &schema_for!(AllNftInfoResponse<DefaultOptionMetadataExtension>),
+        &schema_for!(AllNftInfoResponse<DefaultOptionNftMetadataExtension>),
         &out_dir,
         "AllNftInfoResponse",
     );
@@ -56,9 +59,9 @@ fn main() {
     export_schema(&schema_for!(OperatorResponse), &out_dir);
     export_schema(&schema_for!(OperatorsResponse), &out_dir);
     export_schema_with_title(
-        &schema_for!(CollectionInfo<DefaultOptionCollectionInfoExtension>),
+        &schema_for!(CollectionMetadata<DefaultOptionCollectionMetadataExtension>),
         &out_dir,
-        "CollectionInfo",
+        "CollectionMetadata",
     );
     export_schema(&schema_for!(OwnerOfResponse), &out_dir);
     export_schema(&schema_for!(NumTokensResponse), &out_dir);

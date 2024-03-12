@@ -12,10 +12,11 @@
       "symbol"
     ],
     "properties": {
-      "collection_info_extension": {
+      "collection_metadata_extension": {
+        "description": "Optional extension of the collection metadata",
         "anyOf": [
           {
-            "$ref": "#/definitions/CollectionInfoExtension_for_RoyaltyInfo"
+            "$ref": "#/definitions/CollectionMetadataExtension_for_RoyaltyInfo"
           },
           {
             "type": "null"
@@ -43,11 +44,11 @@
         ]
       },
       "name": {
-        "description": "Name of the NFT contract",
+        "description": "Name of the collection metadata",
         "type": "string"
       },
       "symbol": {
-        "description": "Symbol of the NFT contract",
+        "description": "Symbol of the collection metadata",
         "type": "string"
       },
       "withdraw_address": {
@@ -63,7 +64,7 @@
         "description": "A human readable address.\n\nIn Cosmos, this is typically bech32 encoded. But for multi-chain smart contracts no assumptions should be made other than being UTF-8 encoded and of reasonable length.\n\nThis type represents a validated address. It can be created in the following ways 1. Use `Addr::unchecked(input)` 2. Use `let checked: Addr = deps.api.addr_validate(input)?` 3. Use `let checked: Addr = deps.api.addr_humanize(canonical_addr)?` 4. Deserialize from JSON. This must only be done from JSON that was validated before such as a contract's state. `Addr` must not be used in messages sent by the user because this would result in unvalidated instances.\n\nThis type is immutable. If you really need to mutate it (Really? Are you sure?), create a mutable copy using `let mut mutable = Addr::to_string()` and operate on that `String` instance.",
         "type": "string"
       },
-      "CollectionInfoExtension_for_RoyaltyInfo": {
+      "CollectionMetadataExtension_for_RoyaltyInfo": {
         "type": "object",
         "required": [
           "description",
@@ -495,7 +496,7 @@
         "additionalProperties": false
       },
       {
-        "description": "Deprecated: use GetCollectionInfo instead! Will be removed in next release!",
+        "description": "Deprecated: use GetCollectionMetadata instead! Will be removed in next release!",
         "deprecated": true,
         "type": "object",
         "required": [
@@ -513,10 +514,10 @@
         "description": "With MetaData Extension. Returns top-level metadata about the contract",
         "type": "object",
         "required": [
-          "get_collection_info"
+          "get_collection_metadata"
         ],
         "properties": {
-          "get_collection_info": {
+          "get_collection_metadata": {
             "type": "object",
             "additionalProperties": false
           }
@@ -602,19 +603,19 @@
         "additionalProperties": false
       },
       {
-        "description": "This is a workaround and dummy query like (same as for Extension) for avoiding this compiler error: `cannot infer type for type parameter `TCollectionInfoExtension` declared on the enum `QueryMsg`",
+        "description": "This is a workaround and dummy query like (same as for Extension) for avoiding this compiler error: `cannot infer type for type parameter `TCollectionMetadataExtension` declared on the enum `QueryMsg`",
         "type": "object",
         "required": [
-          "get_collection_info_extension"
+          "get_collection_metadata_extension"
         ],
         "properties": {
-          "get_collection_info_extension": {
+          "get_collection_metadata_extension": {
             "type": "object",
             "properties": {
               "msg": {
                 "anyOf": [
                   {
-                    "$ref": "#/definitions/CollectionInfoExtension_for_RoyaltyInfo"
+                    "$ref": "#/definitions/CollectionMetadataExtension_for_RoyaltyInfo"
                   },
                   {
                     "type": "null"
@@ -646,7 +647,7 @@
         "description": "A human readable address.\n\nIn Cosmos, this is typically bech32 encoded. But for multi-chain smart contracts no assumptions should be made other than being UTF-8 encoded and of reasonable length.\n\nThis type represents a validated address. It can be created in the following ways 1. Use `Addr::unchecked(input)` 2. Use `let checked: Addr = deps.api.addr_validate(input)?` 3. Use `let checked: Addr = deps.api.addr_humanize(canonical_addr)?` 4. Deserialize from JSON. This must only be done from JSON that was validated before such as a contract's state. `Addr` must not be used in messages sent by the user because this would result in unvalidated instances.\n\nThis type is immutable. If you really need to mutate it (Really? Are you sure?), create a mutable copy using `let mut mutable = Addr::to_string()` and operate on that `String` instance.",
         "type": "string"
       },
-      "CollectionInfoExtension_for_RoyaltyInfo": {
+      "CollectionMetadataExtension_for_RoyaltyInfo": {
         "type": "object",
         "required": [
           "description",
@@ -737,7 +738,7 @@
   "responses": {
     "all_nft_info": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "AllNftInfoResponse_for_Nullable_Metadata",
+      "title": "AllNftInfoResponse_for_Nullable_NftMetadata",
       "type": "object",
       "required": [
         "access",
@@ -756,7 +757,7 @@
           "description": "Data on the token itself,",
           "allOf": [
             {
-              "$ref": "#/definitions/NftInfoResponse_for_Nullable_Metadata"
+              "$ref": "#/definitions/NftInfoResponse_for_Nullable_NftMetadata"
             }
           ]
         }
@@ -840,7 +841,31 @@
             }
           ]
         },
-        "Metadata": {
+        "NftInfoResponse_for_Nullable_NftMetadata": {
+          "type": "object",
+          "properties": {
+            "extension": {
+              "description": "You can add any custom metadata here when you extend cw721-base",
+              "anyOf": [
+                {
+                  "$ref": "#/definitions/NftMetadata"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "token_uri": {
+              "description": "Universal resource identifier for this NFT Should point to a JSON file that conforms to the ERC721 Metadata JSON Schema",
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          },
+          "additionalProperties": false
+        },
+        "NftMetadata": {
           "type": "object",
           "properties": {
             "animation_url": {
@@ -895,30 +920,6 @@
               ]
             },
             "youtube_url": {
-              "type": [
-                "string",
-                "null"
-              ]
-            }
-          },
-          "additionalProperties": false
-        },
-        "NftInfoResponse_for_Nullable_Metadata": {
-          "type": "object",
-          "properties": {
-            "extension": {
-              "description": "You can add any custom metadata here when you extend cw721-base",
-              "anyOf": [
-                {
-                  "$ref": "#/definitions/Metadata"
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "token_uri": {
-              "description": "Universal resource identifier for this NFT Should point to a JSON file that conforms to the ERC721 Metadata JSON Schema",
               "type": [
                 "string",
                 "null"
@@ -1325,7 +1326,7 @@
     },
     "contract_info": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "CollectionInfo_for_Nullable_CollectionInfoExtension_for_RoyaltyInfo",
+      "title": "CollectionMetadata_for_Nullable_CollectionMetadataExtension_for_RoyaltyInfo",
       "type": "object",
       "required": [
         "name",
@@ -1336,7 +1337,7 @@
         "extension": {
           "anyOf": [
             {
-              "$ref": "#/definitions/CollectionInfoExtension_for_RoyaltyInfo"
+              "$ref": "#/definitions/CollectionMetadataExtension_for_RoyaltyInfo"
             },
             {
               "type": "null"
@@ -1359,7 +1360,7 @@
           "description": "A human readable address.\n\nIn Cosmos, this is typically bech32 encoded. But for multi-chain smart contracts no assumptions should be made other than being UTF-8 encoded and of reasonable length.\n\nThis type represents a validated address. It can be created in the following ways 1. Use `Addr::unchecked(input)` 2. Use `let checked: Addr = deps.api.addr_validate(input)?` 3. Use `let checked: Addr = deps.api.addr_humanize(canonical_addr)?` 4. Deserialize from JSON. This must only be done from JSON that was validated before such as a contract's state. `Addr` must not be used in messages sent by the user because this would result in unvalidated instances.\n\nThis type is immutable. If you really need to mutate it (Really? Are you sure?), create a mutable copy using `let mut mutable = Addr::to_string()` and operate on that `String` instance.",
           "type": "string"
         },
-        "CollectionInfoExtension_for_RoyaltyInfo": {
+        "CollectionMetadataExtension_for_RoyaltyInfo": {
           "type": "object",
           "required": [
             "description",
@@ -1446,9 +1447,9 @@
       "title": "Null",
       "type": "null"
     },
-    "get_collection_info": {
+    "get_collection_metadata": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "CollectionInfo_for_Nullable_CollectionInfoExtension_for_RoyaltyInfo",
+      "title": "CollectionMetadata_for_Nullable_CollectionMetadataExtension_for_RoyaltyInfo",
       "type": "object",
       "required": [
         "name",
@@ -1459,7 +1460,7 @@
         "extension": {
           "anyOf": [
             {
-              "$ref": "#/definitions/CollectionInfoExtension_for_RoyaltyInfo"
+              "$ref": "#/definitions/CollectionMetadataExtension_for_RoyaltyInfo"
             },
             {
               "type": "null"
@@ -1482,7 +1483,7 @@
           "description": "A human readable address.\n\nIn Cosmos, this is typically bech32 encoded. But for multi-chain smart contracts no assumptions should be made other than being UTF-8 encoded and of reasonable length.\n\nThis type represents a validated address. It can be created in the following ways 1. Use `Addr::unchecked(input)` 2. Use `let checked: Addr = deps.api.addr_validate(input)?` 3. Use `let checked: Addr = deps.api.addr_humanize(canonical_addr)?` 4. Deserialize from JSON. This must only be done from JSON that was validated before such as a contract's state. `Addr` must not be used in messages sent by the user because this would result in unvalidated instances.\n\nThis type is immutable. If you really need to mutate it (Really? Are you sure?), create a mutable copy using `let mut mutable = Addr::to_string()` and operate on that `String` instance.",
           "type": "string"
         },
-        "CollectionInfoExtension_for_RoyaltyInfo": {
+        "CollectionMetadataExtension_for_RoyaltyInfo": {
           "type": "object",
           "required": [
             "description",
@@ -1564,7 +1565,7 @@
         }
       }
     },
-    "get_collection_info_extension": {
+    "get_collection_metadata_extension": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "Null",
       "type": "null"
@@ -1808,14 +1809,14 @@
     },
     "nft_info": {
       "$schema": "http://json-schema.org/draft-07/schema#",
-      "title": "NftInfoResponse_for_Nullable_Metadata",
+      "title": "NftInfoResponse_for_Nullable_NftMetadata",
       "type": "object",
       "properties": {
         "extension": {
           "description": "You can add any custom metadata here when you extend cw721-base",
           "anyOf": [
             {
-              "$ref": "#/definitions/Metadata"
+              "$ref": "#/definitions/NftMetadata"
             },
             {
               "type": "null"
@@ -1832,7 +1833,7 @@
       },
       "additionalProperties": false,
       "definitions": {
-        "Metadata": {
+        "NftMetadata": {
           "type": "object",
           "properties": {
             "animation_url": {

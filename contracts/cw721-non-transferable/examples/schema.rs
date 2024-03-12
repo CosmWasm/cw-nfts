@@ -9,7 +9,10 @@ use cw721::{
         AllNftInfoResponse, ApprovalResponse, ApprovalsResponse, Cw721ExecuteMsg, MinterResponse,
         NftInfoResponse, NumTokensResponse, OperatorsResponse, OwnerOfResponse, TokensResponse,
     },
-    state::{CollectionInfo, DefaultOptionCollectionInfoExtension, DefaultOptionMetadataExtension},
+    state::{
+        CollectionMetadata, DefaultOptionCollectionMetadataExtension,
+        DefaultOptionNftMetadataExtension,
+    },
 };
 #[allow(deprecated)]
 use cw721_non_transferable::{InstantiateMsg, QueryMsg};
@@ -21,23 +24,23 @@ fn main() {
     remove_schemas(&out_dir).unwrap();
 
     export_schema_with_title(
-        &schema_for!(InstantiateMsg<DefaultOptionCollectionInfoExtension>),
+        &schema_for!(InstantiateMsg<DefaultOptionCollectionMetadataExtension>),
         &out_dir,
         "InstantiateMsg",
     );
     export_schema_with_title(
-        &schema_for!(Cw721ExecuteMsg<DefaultOptionMetadataExtension, Empty, DefaultOptionCollectionInfoExtension>),
+        &schema_for!(Cw721ExecuteMsg<DefaultOptionNftMetadataExtension, Empty, DefaultOptionCollectionMetadataExtension>),
         &out_dir,
         "ExecuteMsg",
     );
     export_schema(&schema_for!(QueryMsg), &out_dir);
     export_schema_with_title(
-        &schema_for!(NftInfoResponse<DefaultOptionMetadataExtension>),
+        &schema_for!(NftInfoResponse<DefaultOptionNftMetadataExtension>),
         &out_dir,
         "NftInfoResponse",
     );
     export_schema_with_title(
-        &schema_for!(AllNftInfoResponse<DefaultOptionMetadataExtension>),
+        &schema_for!(AllNftInfoResponse<DefaultOptionNftMetadataExtension>),
         &out_dir,
         "AllNftInfoResponse",
     );
@@ -45,9 +48,9 @@ fn main() {
     export_schema(&schema_for!(ApprovalsResponse), &out_dir);
     export_schema(&schema_for!(OperatorsResponse), &out_dir);
     export_schema_with_title(
-        &schema_for!(CollectionInfo<DefaultOptionCollectionInfoExtension>),
+        &schema_for!(CollectionMetadata<DefaultOptionCollectionMetadataExtension>),
         &out_dir,
-        "CollectionInfo",
+        "CollectionMetadata",
     );
     export_schema(&schema_for!(MinterResponse), &out_dir);
     export_schema(&schema_for!(NumTokensResponse), &out_dir);
