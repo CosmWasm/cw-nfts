@@ -495,6 +495,7 @@
         "additionalProperties": false
       },
       {
+        "description": "Deprecated: use GetCollectionInfo instead! Will be removed in next release!",
         "deprecated": true,
         "type": "object",
         "required": [
@@ -523,6 +524,7 @@
         "additionalProperties": false
       },
       {
+        "description": "Deprecated: use GetMinterOwnership instead! Will be removed in next release!",
         "deprecated": true,
         "type": "object",
         "required": [
@@ -530,6 +532,21 @@
         ],
         "properties": {
           "ownership": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "description": "Return the minter Deprecated: use GetMinterOwnership instead! Will be removed in next release!",
+        "deprecated": true,
+        "type": "object",
+        "required": [
+          "minter"
+        ],
+        "properties": {
+          "minter": {
             "type": "object",
             "additionalProperties": false
           }
@@ -556,21 +573,6 @@
         ],
         "properties": {
           "get_creator_ownership": {
-            "type": "object",
-            "additionalProperties": false
-          }
-        },
-        "additionalProperties": false
-      },
-      {
-        "description": "Return the minter",
-        "deprecated": true,
-        "type": "object",
-        "required": [
-          "minter"
-        ],
-        "properties": {
-          "minter": {
             "type": "object",
             "additionalProperties": false
           }

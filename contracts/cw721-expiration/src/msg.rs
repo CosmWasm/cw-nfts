@@ -125,6 +125,7 @@ pub enum QueryMsg<TMetadataExtension, TCollectionInfoExtension> {
 
     #[deprecated(since = "0.19.0", note = "Please use GetCollectionInfo instead")]
     #[returns(cw721::state::CollectionInfo<cw721::state::DefaultOptionCollectionInfoExtension>)]
+    /// Deprecated: use GetCollectionInfo instead! Will be removed in next release!
     ContractInfo {},
 
     /// With MetaData Extension.
@@ -134,11 +135,13 @@ pub enum QueryMsg<TMetadataExtension, TCollectionInfoExtension> {
 
     #[deprecated(since = "0.19.0", note = "Please use GetMinterOwnership instead")]
     #[returns(Ownership<Addr>)]
+    /// Deprecated: use GetMinterOwnership instead! Will be removed in next release!
     Ownership {},
 
     /// Return the minter
     #[deprecated(since = "0.19.0", note = "Please use GetMinterOwnership instead")]
     #[returns(MinterResponse)]
+    /// Deprecated: use GetMinterOwnership instead! Will be removed in next release!
     Minter {},
 
     #[returns(Ownership<Addr>)]
