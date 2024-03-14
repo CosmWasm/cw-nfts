@@ -1,7 +1,6 @@
 use cosmwasm_schema::cw_serde;
 use cw721::{
-    msg::Cw721QueryMsg,
-    state::{DefaultOptionCollectionMetadataExtension, DefaultOptionNftMetadataExtension},
+    msg::Cw721QueryMsg, DefaultOptionCollectionMetadataExtension, DefaultOptionNftMetadataExtension,
 };
 
 #[cw_serde]

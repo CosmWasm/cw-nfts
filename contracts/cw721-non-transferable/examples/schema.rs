@@ -8,11 +8,9 @@ use cw721::{
         AllNftInfoResponse, ApprovalResponse, ApprovalsResponse, Cw721ExecuteMsg, MinterResponse,
         NftInfoResponse, NumTokensResponse, OperatorsResponse, OwnerOfResponse, TokensResponse,
     },
-    state::{
-        CollectionMetadata, DefaultOptionCollectionMetadataExtension,
-        DefaultOptionCollectionMetadataExtensionMsg, DefaultOptionNftMetadataExtension,
-        DefaultOptionNftMetadataExtensionMsg,
-    },
+    state::CollectionMetadata,
+    DefaultOptionCollectionMetadataExtension, DefaultOptionCollectionMetadataExtensionMsg,
+    DefaultOptionNftMetadataExtension, DefaultOptionNftMetadataExtensionMsg,
 };
 #[allow(deprecated)]
 use cw721_non_transferable::{InstantiateMsg, QueryMsg};
