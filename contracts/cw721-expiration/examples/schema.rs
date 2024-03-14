@@ -1,6 +1,6 @@
 use cosmwasm_schema::write_api;
 use cosmwasm_std::Empty;
-use cw721::DefaultOptionCollectionMetadataExtension;
+use cw721_base::DefaultOptionCollectionMetadataExtension;
 use cw721_expiration::msg::{InstantiateMsg, QueryMsg};
 
 fn main() {
