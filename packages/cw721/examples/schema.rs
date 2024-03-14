@@ -13,7 +13,7 @@ use cw721::{
     receiver::Cw721ReceiveMsg,
     state::{
         CollectionMetadata, DefaultOptionCollectionMetadataExtension,
-        DefaultOptionNftMetadataExtension,
+        DefaultOptionNftMetadataExtension, DefaultOptionNftMetadataExtensionMsg,
     },
 };
 fn main() {
@@ -30,8 +30,7 @@ fn main() {
     export_schema_with_title(
         &schema_for!(
             Cw721ExecuteMsg::<
-                DefaultOptionNftMetadataExtension,
-                Empty,
+                DefaultOptionNftMetadataExtensionMsg,
                 DefaultOptionCollectionMetadataExtension,
             >
         ),
