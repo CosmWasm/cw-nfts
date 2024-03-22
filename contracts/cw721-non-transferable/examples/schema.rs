@@ -8,8 +8,7 @@ use cw721::{
         AllNftInfoResponse, ApprovalResponse, ApprovalsResponse, Cw721ExecuteMsg, MinterResponse,
         NftInfoResponse, NumTokensResponse, OperatorsResponse, OwnerOfResponse, TokensResponse,
     },
-    state::CollectionMetadata,
-    CollectionMetadataWrapper, DefaultOptionCollectionMetadataExtension,
+    CollectionMetadataAndExtension, DefaultOptionCollectionMetadataExtension,
     DefaultOptionCollectionMetadataExtensionMsg, DefaultOptionNftMetadataExtension,
     DefaultOptionNftMetadataExtensionMsg,
 };
@@ -47,7 +46,7 @@ fn main() {
     export_schema(&schema_for!(ApprovalsResponse), &out_dir);
     export_schema(&schema_for!(OperatorsResponse), &out_dir);
     export_schema_with_title(
-        &schema_for!(CollectionMetadataWrapper<DefaultOptionCollectionMetadataExtension>),
+        &schema_for!(CollectionMetadataAndExtension<DefaultOptionCollectionMetadataExtension>),
         &out_dir,
         "CollectionMetadata",
     );
