@@ -5,14 +5,14 @@ use cosmwasm_schema::{export_schema, export_schema_with_title, remove_schemas, s
 
 use cw721::{
     msg::{
-        AllNftInfoResponse, ApprovalResponse, ApprovalsResponse, Cw721ExecuteMsg,
-        Cw721InstantiateMsg, Cw721QueryMsg, NftInfoResponse, NumTokensResponse, OperatorResponse,
-        OperatorsResponse, OwnerOfResponse, TokensResponse,
+        AllNftInfoResponse, ApprovalResponse, ApprovalsResponse,
+        CollectionInfoAndExtensionResponse, Cw721ExecuteMsg, Cw721InstantiateMsg, Cw721QueryMsg,
+        NftInfoResponse, NumTokensResponse, OperatorResponse, OperatorsResponse, OwnerOfResponse,
+        TokensResponse,
     },
     receiver::Cw721ReceiveMsg,
-    state::CollectionMetadataAndExtension,
-    DefaultOptionCollectionMetadataExtension, DefaultOptionNftMetadataExtension,
-    DefaultOptionNftMetadataExtensionMsg,
+    DefaultOptionalCollectionExtension, DefaultOptionalNftExtension,
+    DefaultOptionalNftExtensionMsg,
 };
 fn main() {
     let mut out_dir = current_dir().unwrap();
@@ -21,33 +21,30 @@ fn main() {
     remove_schemas(&out_dir).unwrap();
 
     export_schema_with_title(
-        &schema_for!(Cw721InstantiateMsg<DefaultOptionCollectionMetadataExtension>),
+        &schema_for!(Cw721InstantiateMsg<DefaultOptionalCollectionExtension>),
         &out_dir,
         "InstantiateMsg",
     );
     export_schema_with_title(
         &schema_for!(
-            Cw721ExecuteMsg::<
-                DefaultOptionNftMetadataExtensionMsg,
-                DefaultOptionCollectionMetadataExtension,
-            >
+            Cw721ExecuteMsg::<DefaultOptionalNftExtensionMsg, DefaultOptionalCollectionExtension>
         ),
         &out_dir,
         "ExecuteMsg",
     );
     export_schema_with_title(
-        &schema_for!(Cw721QueryMsg<DefaultOptionNftMetadataExtension, DefaultOptionCollectionMetadataExtension>),
+        &schema_for!(Cw721QueryMsg<DefaultOptionalNftExtension, DefaultOptionalCollectionExtension>),
         &out_dir,
         "QueryMsg",
     );
     export_schema(&schema_for!(Cw721ReceiveMsg), &out_dir);
     export_schema_with_title(
-        &schema_for!(NftInfoResponse<DefaultOptionNftMetadataExtension>),
+        &schema_for!(NftInfoResponse<DefaultOptionalNftExtension>),
         &out_dir,
         "NftInfoResponse",
     );
     export_schema_with_title(
-        &schema_for!(AllNftInfoResponse<DefaultOptionNftMetadataExtension>),
+        &schema_for!(AllNftInfoResponse<DefaultOptionalNftExtension>),
         &out_dir,
         "AllNftInfoResponse",
     );
@@ -56,9 +53,9 @@ fn main() {
     export_schema(&schema_for!(OperatorResponse), &out_dir);
     export_schema(&schema_for!(OperatorsResponse), &out_dir);
     export_schema_with_title(
-        &schema_for!(CollectionMetadataAndExtension<DefaultOptionCollectionMetadataExtension>),
+        &schema_for!(CollectionInfoAndExtensionResponse<DefaultOptionalCollectionExtension>),
         &out_dir,
-        "CollectionMetadata",
+        "CollectionInfo",
     );
     export_schema(&schema_for!(OwnerOfResponse), &out_dir);
     export_schema(&schema_for!(NumTokensResponse), &out_dir);
