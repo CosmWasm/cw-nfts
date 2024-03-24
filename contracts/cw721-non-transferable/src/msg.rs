@@ -1,4 +1,5 @@
 use cosmwasm_schema::cw_serde;
+use cosmwasm_std::Empty;
 use cw721::{msg::Cw721QueryMsg, DefaultOptionalCollectionExtension, DefaultOptionalNftExtension};
 
 #[cw_serde]
@@ -78,11 +79,11 @@ pub enum QueryMsg {
 }
 
 impl From<QueryMsg>
-    for Cw721QueryMsg<DefaultOptionalNftExtension, DefaultOptionalCollectionExtension>
+    for Cw721QueryMsg<DefaultOptionalNftExtension, DefaultOptionalCollectionExtension, Empty>
 {
     fn from(
         msg: QueryMsg,
-    ) -> Cw721QueryMsg<DefaultOptionalNftExtension, DefaultOptionalCollectionExtension> {
+    ) -> Cw721QueryMsg<DefaultOptionalNftExtension, DefaultOptionalCollectionExtension, Empty> {
         match msg {
             QueryMsg::OwnerOf {
                 token_id,

@@ -30,7 +30,7 @@ pub struct InstantiateMsg<TCollectionExtension> {
 
 #[cw_serde]
 #[derive(QueryResponses)]
-pub enum QueryMsg<TNftExtension, TCollectionExtension> {
+pub enum QueryMsg<TNftExtension, TCollectionExtension, TExtensionQueryMsg> {
     // -------- below adds `include_expired_nft` prop to cw721/src/msg.rs --------
     /// Return the owner of the given token, error if token does not exist
     #[returns(cw721_base::msg::OwnerOfResponse)]
@@ -65,6 +65,14 @@ pub enum QueryMsg<TNftExtension, TCollectionExtension> {
     #[returns(cw721_base::msg::NftInfoResponse<DefaultOptionalNftExtension>)]
     NftInfo {
         token_id: String,
+        /// unset or false will filter out expired nfts, you must set to true to see them
+        include_expired_nft: Option<bool>,
+    },
+
+    #[returns(Option<cw721_base::msg::NftInfoResponse<TNftExtension>>)]
+    GetNftByExtension {
+        token_id: String,
+        extension: TNftExtension,
         /// unset or false will filter out expired nfts, you must set to true to see them
         include_expired_nft: Option<bool>,
     },
@@ -155,7 +163,11 @@ pub enum QueryMsg<TNftExtension, TCollectionExtension> {
 
     /// Extension query
     #[returns(())]
-    Extension { msg: TNftExtension },
+    Extension {
+        msg: TExtensionQueryMsg,
+        /// unset or false will filter out expired nfts, you must set to true to see them
+        include_expired_nft: Option<bool>,
+    },
 
     /// This is a workaround and dummy query like (same as for Extension) for avoiding this compiler error:
     /// `cannot infer type for type parameter `TCollectionExtension` declared on the enum `QueryMsg`
