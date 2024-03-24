@@ -3,6 +3,7 @@ use std::fs::create_dir_all;
 
 use cosmwasm_schema::{export_schema, export_schema_with_title, remove_schemas, schema_for};
 
+use cosmwasm_std::Empty;
 use cw721::{
     msg::{
         AllNftInfoResponse, ApprovalResponse, ApprovalsResponse,
@@ -27,7 +28,7 @@ fn main() {
         "InstantiateMsg",
     );
     export_schema_with_title(
-        &schema_for!(Cw721ExecuteMsg<DefaultOptionalNftExtensionMsg, DefaultOptionalCollectionExtensionMsg>),
+        &schema_for!(Cw721ExecuteMsg<DefaultOptionalNftExtensionMsg, DefaultOptionalCollectionExtensionMsg, Empty>),
         &out_dir,
         "ExecuteMsg",
     );
