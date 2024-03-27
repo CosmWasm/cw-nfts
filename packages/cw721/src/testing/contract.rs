@@ -1,11 +1,12 @@
 use std::marker::PhantomData;
 
-// expose to all others using contract, so others dont need to import cw721
-pub use cw721::state::*;
-use cw721::traits::{Cw721CustomMsg, Cw721State};
+use cosmwasm_std::CustomMsg;
 
-#[deprecated(since = "0.19.0", note = "Please use `NftInfo`")]
-pub type TokenInfo<TNftExtension> = NftInfo<TNftExtension>;
+use crate::state::Cw721Config;
+use crate::traits::{
+    Contains, Cw721CustomMsg, Cw721Execute, Cw721Query, Cw721State, FromAttributesState,
+    StateFactory, ToAttributesState,
+};
 
 pub struct Cw721Contract<
     'a,
@@ -30,6 +31,7 @@ pub struct Cw721Contract<
     TCollectionExtensionMsg: Cw721CustomMsg,
 {
     pub config: Cw721Config<'a, TNftExtension>,
+
     pub(crate) _collection_extension: PhantomData<TCollectionExtension>,
     pub(crate) _nft_extension_msg: PhantomData<TNftExtensionMsg>,
     pub(crate) _collection_extension_msg: PhantomData<TCollectionExtensionMsg>,
@@ -74,4 +76,72 @@ where
             _custom_response_msg: PhantomData,
         }
     }
+}
+
+impl<
+        'a,
+        TNftExtension,
+        TNftExtensionMsg,
+        TCollectionExtension,
+        TCollectionExtensionMsg,
+        TExtensionMsg,
+        TExtensionQueryMsg,
+        TCustomResponseMsg,
+    >
+    Cw721Execute<
+        TNftExtension,
+        TNftExtensionMsg,
+        TCollectionExtension,
+        TCollectionExtensionMsg,
+        TExtensionMsg,
+        TCustomResponseMsg,
+    >
+    for Cw721Contract<
+        'a,
+        TNftExtension,
+        TNftExtensionMsg,
+        TCollectionExtension,
+        TCollectionExtensionMsg,
+        TExtensionMsg,
+        TExtensionQueryMsg,
+        TCustomResponseMsg,
+    >
+where
+    TNftExtension: Cw721State,
+    TNftExtensionMsg: Cw721CustomMsg + StateFactory<TNftExtension>,
+    TCollectionExtension: Cw721State + ToAttributesState + FromAttributesState,
+    TCollectionExtensionMsg: Cw721CustomMsg + StateFactory<TCollectionExtension>,
+    TCustomResponseMsg: CustomMsg,
+{
+}
+
+impl<
+        'a,
+        TNftExtension,
+        TNftExtensionMsg,
+        TCollectionExtension,
+        TCollectionExtensionMsg,
+        TExtensionMsg,
+        TExtensionQueryMsg,
+        TCustomResponseMsg,
+    > Cw721Query<TNftExtension, TCollectionExtension, TExtensionQueryMsg>
+    for Cw721Contract<
+        'a,
+        TNftExtension,
+        TNftExtensionMsg,
+        TCollectionExtension,
+        TCollectionExtensionMsg,
+        TExtensionMsg,
+        TExtensionQueryMsg,
+        TCustomResponseMsg,
+    >
+where
+    TNftExtension: Cw721State + Contains,
+    TNftExtensionMsg: Cw721CustomMsg,
+    TCollectionExtension: Cw721State + FromAttributesState,
+    TCollectionExtensionMsg: Cw721CustomMsg,
+    TExtensionMsg: Cw721CustomMsg,
+    TExtensionQueryMsg: Cw721CustomMsg,
+    TCustomResponseMsg: CustomMsg,
+{
 }

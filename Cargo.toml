@@ -2,7 +2,7 @@
 members = ["packages/*", "contracts/*"]
 
 [workspace.package]
-version       = "0.18.0"
+version       = "0.19.0"
 edition       = "2021"
 license       = "Apache-2.0"
 repository    = "https://github.com/CosmWasm/cw-nfts"
@@ -16,15 +16,22 @@ cosmwasm-std    = "^1.2"
 cw2             = "^1.1"
 cw20            = "^1.1"
 cw721           = { version = "*", path = "./packages/cw721" }
+cw721-016       = { git = "https://github.com/CosmWasm/cw-nfts", tag = "v0.16.0", package = "cw721" } # needed for backwards compatibility and legacy migration
 cw721-base      = { version = "*", path = "./contracts/cw721-base" }
-cw721-base-016  = { version = "0.16.0", package = "cw721-base" }
+cw721-base-015  = { git = "https://github.com/CosmWasm/cw-nfts", tag = "v0.15.0", package = "cw721-base" } # needed for testing legacy migration
+cw721-base-016  = { git = "https://github.com/CosmWasm/cw-nfts", tag = "v0.16.0", package = "cw721-base" } # needed for testing legacy migration
+cw721-metadata-onchain-016  = { git = "https://github.com/CosmWasm/cw-nfts", tag = "v0.16.0", package = "cw721-metadata-onchain" } # needed for testing legacy migration
+cw721-base-017  = { git = "https://github.com/CosmWasm/cw-nfts", tag = "v0.17.0", package = "cw721-base" } # needed for testing legacy migration
+cw721-base-018  = { git = "https://github.com/CosmWasm/cw-nfts", tag = "v0.18.0", package = "cw721-base" } # needed for testing legacy migration
 cw-multi-test   = "^0.20"
-cw-ownable      = "^0.5"
+cw-ownable      = { git = "https://github.com/public-awesome/cw-plus-plus.git", branch = "main"} # TODO: switch to official https://github.com/larry0x/cw-plus-plus once merged
+cw-paginate-storage  = "^2.3"
 cw-storage-plus = "^1.1"
 cw-utils        = "^1.0"
 schemars        = "^0.8"
 serde           = { version = "1.0.152", default-features = false, features = ["derive"] }
 thiserror       = "^1.0"
+url             = "^2.5"
 
 [profile.release.package.cw721-base]
 codegen-units = 1

@@ -1,10 +1,11 @@
 use cosmwasm_schema::write_api;
-use cw721_expiration::msg::{ExecuteMsg, InstantiateMsg, QueryMsg};
+use cosmwasm_std::Empty;
+use cw721_base::{DefaultOptionalCollectionExtension, DefaultOptionalNftExtension};
+use cw721_expiration::msg::{InstantiateMsg, QueryMsg};
 
 fn main() {
     write_api! {
-        instantiate: InstantiateMsg,
-        execute: ExecuteMsg,
-        query: QueryMsg,
+        instantiate: InstantiateMsg<DefaultOptionalCollectionExtension>,
+        query: QueryMsg<DefaultOptionalNftExtension, DefaultOptionalCollectionExtension, Empty>,
     }
 }
