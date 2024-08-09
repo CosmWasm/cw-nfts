@@ -15,17 +15,19 @@ use serde::de::DeserializeOwned;
 use serde::Serialize;
 
 #[cw_serde]
-pub struct Cw721Contract<TMetadataExtension, TMetadataExtensionMsg: CustomMsg>(
+pub struct Cw721Contract<TMetadataExtension, TMetadataExtensionMsg: CustomMsg, TQueryExtensionMsg>(
     pub Addr,
     pub PhantomData<TMetadataExtension>,
     pub PhantomData<TMetadataExtensionMsg>,
+    pub PhantomData<TQueryExtensionMsg>,
 );
 
 #[allow(dead_code)]
-impl<TMetadataExtension, TMetadataExtensionMsg: CustomMsg>
-    Cw721Contract<TMetadataExtension, TMetadataExtensionMsg>
+impl<TMetadataExtension, TMetadataExtensionMsg: CustomMsg, TQueryExtensionMsg>
+    Cw721Contract<TMetadataExtension, TMetadataExtensionMsg, TQueryExtensionMsg>
 where
     TMetadataExtension: Serialize + DeserializeOwned + Clone,
+    TQueryExtensionMsg: Serialize + DeserializeOwned + Clone,
 {
     pub fn addr(&self) -> Addr {
         self.0.clone()
@@ -47,7 +49,7 @@ where
     pub fn query<T: DeserializeOwned>(
         &self,
         querier: &QuerierWrapper,
-        req: Cw721QueryMsg<TMetadataExtension>,
+        req: Cw721QueryMsg<TMetadataExtension, TQueryExtensionMsg>,
     ) -> StdResult<T> {
         let query = WasmQuery::Smart {
             contract_addr: self.addr().into(),

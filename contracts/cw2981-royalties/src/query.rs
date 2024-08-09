@@ -1,6 +1,7 @@
 use crate::msg::{CheckRoyaltiesResponse, RoyaltiesInfoResponse};
-use crate::Cw2981Contract;
+use crate::{Cw2981Contract, Extension};
 use cosmwasm_std::{Decimal, Deps, Env, StdResult, Uint128};
+use cw721::msg::NftInfoResponse;
 use cw721_base::query::Cw721Query;
 
 /// NOTE: default behaviour here is to round down
@@ -12,7 +13,7 @@ pub fn query_royalties_info(
     sale_price: Uint128,
 ) -> StdResult<RoyaltiesInfoResponse> {
     let contract = Cw2981Contract::default();
-    let token_info = contract.query_nft_info(deps, env, token_id)?;
+    let token_info: NftInfoResponse<Extension> = contract.query_nft_info(deps, env, token_id)?;
 
     let royalty_percentage = match token_info.extension {
         Some(ref ext) => match ext.royalty_percentage {
@@ -24,10 +25,7 @@ pub fn query_royalties_info(
     let royalty_from_sale_price = sale_price * royalty_percentage;
 
     let royalty_address = match token_info.extension {
-        Some(ext) => match ext.royalty_payment_address {
-            Some(addr) => addr,
-            None => String::from(""),
-        },
+        Some(ext) => ext.royalty_payment_address.unwrap_or_default(),
         None => String::from(""),
     };
 

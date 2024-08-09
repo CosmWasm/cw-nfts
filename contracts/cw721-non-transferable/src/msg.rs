@@ -1,4 +1,5 @@
 use cosmwasm_schema::cw_serde;
+use cosmwasm_std::Empty;
 // expose to all others using contract, so others dont need to import cw721
 pub use cw721::msg::{Cw721ExecuteMsg as ExecuteMsg, Cw721MigrateMsg as MigrateMsg, *};
 use cw721::state::DefaultOptionMetadataExtension;
@@ -60,8 +61,8 @@ pub enum QueryMsg {
     GetWithdrawAddress {},
 }
 
-impl From<QueryMsg> for Cw721QueryMsg<DefaultOptionMetadataExtension> {
-    fn from(msg: QueryMsg) -> Cw721QueryMsg<DefaultOptionMetadataExtension> {
+impl From<QueryMsg> for Cw721QueryMsg<DefaultOptionMetadataExtension, Empty> {
+    fn from(msg: QueryMsg) -> Cw721QueryMsg<DefaultOptionMetadataExtension, Empty> {
         match msg {
             QueryMsg::OwnerOf {
                 token_id,

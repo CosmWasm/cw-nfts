@@ -19,7 +19,7 @@ use super::*;
 fn proper_cw2_initialization() {
     let mut deps = mock_dependencies();
 
-    Cw721Contract::<DefaultOptionMetadataExtension, Empty, Empty>::default()
+    Cw721Contract::<DefaultOptionMetadataExtension, Empty, Empty, Empty>::default()
         .instantiate(
             deps.as_mut(),
             mock_env(),
@@ -57,7 +57,7 @@ fn proper_owner_initialization() {
     let mut deps = mock_dependencies();
 
     let info_owner = mock_info("owner", &[]);
-    Cw721Contract::<DefaultOptionMetadataExtension, Empty, Empty>::default()
+    Cw721Contract::<DefaultOptionMetadataExtension, Empty, Empty, Empty>::default()
         .instantiate(
             deps.as_mut(),
             mock_env(),
@@ -80,7 +80,7 @@ fn proper_owner_initialization() {
 #[test]
 fn use_metadata_extension() {
     let mut deps = mock_dependencies();
-    let contract = Cw721Contract::<DefaultOptionMetadataExtension, Empty, Empty>::default();
+    let contract = Cw721Contract::<DefaultOptionMetadataExtension, Empty, Empty, Empty>::default();
 
     let info = mock_info(CREATOR_ADDR, &[]);
     let init_msg = Cw721InstantiateMsg {
@@ -158,7 +158,7 @@ fn test_migrate() {
     // assert new data before migration:
     // - ownership and collection info throws NotFound Error
     MINTER.item.load(deps.as_ref().storage).unwrap_err(); // cw_ownable in v16 is used for minter
-    let contract = Cw721Contract::<DefaultOptionMetadataExtension, Empty, Empty>::default();
+    let contract = Cw721Contract::<DefaultOptionMetadataExtension, Empty, Empty, Empty>::default();
     contract
         .query_collection_info(deps.as_ref(), env.clone())
         .unwrap_err();
@@ -187,7 +187,7 @@ fn test_migrate() {
         assert_eq!(token.owner.as_str(), "owner");
     }
 
-    Cw721Contract::<DefaultOptionMetadataExtension, Empty, Empty>::default()
+    Cw721Contract::<DefaultOptionMetadataExtension, Empty, Empty, Empty>::default()
         .migrate(
             deps.as_mut(),
             env.clone(),

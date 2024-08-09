@@ -168,8 +168,9 @@ pub fn execute_receive(
 
     match config.cw721_address.clone() {
         Some(cw721) => {
-            let callback = Cw721Contract::<DefaultOptionMetadataExtension, Empty>(
+            let callback = Cw721Contract::<DefaultOptionMetadataExtension, Empty, Empty>(
                 cw721,
+                PhantomData,
                 PhantomData,
                 PhantomData,
             )

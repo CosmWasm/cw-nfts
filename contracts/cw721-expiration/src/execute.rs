@@ -12,12 +12,19 @@ use crate::{
     CONTRACT_VERSION,
 };
 
-impl<'a, TMetadataExtension, TCustomResponseMessage, TMetadataExtensionMsg>
-    Cw721ExpirationContract<'a, TMetadataExtension, TCustomResponseMessage, TMetadataExtensionMsg>
+impl<'a, TMetadataExtension, TCustomResponseMessage, TMetadataExtensionMsg, TQueryExtensionMsg>
+    Cw721ExpirationContract<
+        'a,
+        TMetadataExtension,
+        TCustomResponseMessage,
+        TMetadataExtensionMsg,
+        TQueryExtensionMsg,
+    >
 where
     TMetadataExtension: Serialize + DeserializeOwned + Clone,
     TCustomResponseMessage: CustomMsg,
     TMetadataExtensionMsg: CustomMsg,
+    TQueryExtensionMsg: Serialize + DeserializeOwned + Clone,
 {
     // -- instantiate --
     pub fn instantiate(
@@ -34,6 +41,7 @@ where
             TMetadataExtension,
             TCustomResponseMessage,
             TMetadataExtensionMsg,
+            TQueryExtensionMsg,
         >::default();
         contract
             .expiration_days
@@ -65,6 +73,7 @@ where
             TMetadataExtension,
             TCustomResponseMessage,
             TMetadataExtensionMsg,
+            TQueryExtensionMsg,
         >::default();
         match msg {
             Cw721ExecuteMsg::Mint {

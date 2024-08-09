@@ -15,7 +15,7 @@ const CONTRACT_NAME: &str = "crates.io:cw721-non-transferable";
 const CONTRACT_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 pub type Cw721NonTransferableContract<'a> =
-    Cw721Contract<'a, DefaultOptionMetadataExtension, Empty, Empty>;
+    Cw721Contract<'a, DefaultOptionMetadataExtension, Empty, Empty, Empty>;
 
 #[cfg(not(feature = "library"))]
 pub mod entry {

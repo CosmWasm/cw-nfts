@@ -25,7 +25,7 @@ const SYMBOL: &str = "MGK";
 
 fn setup_contract(
     deps: DepsMut<'_>,
-) -> Cw721Contract<'static, DefaultOptionMetadataExtension, Empty, Empty> {
+) -> Cw721Contract<'static, DefaultOptionMetadataExtension, Empty, Empty, Empty> {
     let contract = Cw721Contract::default();
     let msg = Cw721InstantiateMsg {
         name: CONTRACT_NAME.to_string(),
@@ -51,7 +51,7 @@ fn setup_contract(
 #[test]
 fn proper_instantiation() {
     let mut deps = mock_dependencies();
-    let contract = Cw721Contract::<DefaultOptionMetadataExtension, Empty, Empty>::default();
+    let contract = Cw721Contract::<DefaultOptionMetadataExtension, Empty, Empty, Empty>::default();
 
     let msg = Cw721InstantiateMsg {
         name: CONTRACT_NAME.to_string(),
@@ -111,7 +111,7 @@ fn proper_instantiation() {
 #[test]
 fn proper_instantiation_with_collection_info() {
     let mut deps = mock_dependencies();
-    let contract = Cw721Contract::<DefaultOptionMetadataExtension, Empty, Empty>::default();
+    let contract = Cw721Contract::<DefaultOptionMetadataExtension, Empty, Empty, Empty>::default();
 
     let msg = Cw721InstantiateMsg {
         name: CONTRACT_NAME.to_string(),

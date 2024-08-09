@@ -29,9 +29,9 @@ const SYMBOL: &str = "MGK";
 fn setup_contract(
     deps: DepsMut<'_>,
     expiration_days: u16,
-) -> Cw721ExpirationContract<'static, DefaultOptionMetadataExtension, Empty, Empty> {
+) -> Cw721ExpirationContract<'static, DefaultOptionMetadataExtension, Empty, Empty, Empty> {
     let contract =
-        Cw721ExpirationContract::<DefaultOptionMetadataExtension, Empty, Empty>::default();
+        Cw721ExpirationContract::<DefaultOptionMetadataExtension, Empty, Empty, Empty>::default();
     let msg = InstantiateMsg {
         expiration_days,
         name: CONTRACT_NAME.to_string(),
@@ -49,7 +49,7 @@ fn setup_contract(
 fn proper_instantiation() {
     let mut deps = mock_dependencies();
     let contract =
-        Cw721ExpirationContract::<DefaultOptionMetadataExtension, Empty, Empty>::default();
+        Cw721ExpirationContract::<DefaultOptionMetadataExtension, Empty, Empty, Empty>::default();
 
     let msg = InstantiateMsg {
         expiration_days: 1,
@@ -107,7 +107,7 @@ fn proper_instantiation() {
 fn proper_instantiation_with_collection_info() {
     let mut deps = mock_dependencies();
     let contract =
-        Cw721ExpirationContract::<DefaultOptionMetadataExtension, Empty, Empty>::default();
+        Cw721ExpirationContract::<DefaultOptionMetadataExtension, Empty, Empty, Empty>::default();
 
     let msg = InstantiateMsg {
         expiration_days: 1,

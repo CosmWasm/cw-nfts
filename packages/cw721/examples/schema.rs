@@ -32,7 +32,7 @@ fn main() {
         "Cw721ExecuteMsg",
     );
     export_schema_with_title(
-        &schema_for!(Cw721QueryMsg<Empty>),
+        &schema_for!(Cw721QueryMsg<Empty, Empty>),
         &out_dir,
         "Cw721QueryMsg",
     );

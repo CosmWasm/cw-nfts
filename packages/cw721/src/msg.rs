@@ -99,7 +99,7 @@ pub struct Cw721InstantiateMsg {
 
 #[cw_serde]
 #[derive(QueryResponses)]
-pub enum Cw721QueryMsg<TMetadataExtension> {
+pub enum Cw721QueryMsg<TMetadataExtension, TQueryExtensionMsg> {
     /// Return the owner of the given token, error if token does not exist
     #[returns(OwnerOfResponse)]
     OwnerOf {
@@ -189,7 +189,10 @@ pub enum Cw721QueryMsg<TMetadataExtension> {
     // -- "type annotations needed: cannot infer type for type parameter `TMetadataExtension` declared on the enum `Cw721QueryMsg`"
     /// Do not use - dummy extension query, needed for inferring type parameter during compile
     #[returns(())]
-    Extension { msg: TMetadataExtension },
+    Extension {
+        msg: TQueryExtensionMsg,
+        phantom: Option<TMetadataExtension>, // dummy field to infer type
+    },
 }
 
 #[cw_serde]

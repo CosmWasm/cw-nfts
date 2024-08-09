@@ -28,7 +28,7 @@ pub struct InstantiateMsg {
 
 #[cw_serde]
 #[derive(QueryResponses)]
-pub enum QueryMsg<TMetadataExtension> {
+pub enum QueryMsg<TMetadataExtension, TQueryExtensionMsg> {
     // -------- below adds `include_expired_nft` prop to cw721/src/msg.rs --------
     /// Return the owner of the given token, error if token does not exist
     #[returns(cw721::msg::OwnerOfResponse)]
@@ -141,7 +141,10 @@ pub enum QueryMsg<TMetadataExtension> {
 
     /// Extension query
     #[returns(())]
-    Extension { msg: TMetadataExtension },
+    Extension {
+        msg: TQueryExtensionMsg,
+        phantom: Option<TMetadataExtension>, // dummy field to infer type
+    },
 
     #[returns(Option<String>)]
     GetWithdrawAddress {},

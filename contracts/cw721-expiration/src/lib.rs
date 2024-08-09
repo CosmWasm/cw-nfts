@@ -41,7 +41,8 @@ pub mod entry {
         msg: InstantiateMsg,
     ) -> Result<Response, ContractError> {
         let contract =
-            Cw721ExpirationContract::<DefaultOptionMetadataExtension, Empty, Empty>::default();
+            Cw721ExpirationContract::<DefaultOptionMetadataExtension, Empty, Empty, Empty>::default(
+            );
         contract.instantiate(deps, env, info, msg)
     }
 
@@ -53,7 +54,8 @@ pub mod entry {
         msg: Cw721ExecuteMsg<DefaultOptionMetadataExtension, Empty>,
     ) -> Result<Response, ContractError> {
         let contract =
-            Cw721ExpirationContract::<DefaultOptionMetadataExtension, Empty, Empty>::default();
+            Cw721ExpirationContract::<DefaultOptionMetadataExtension, Empty, Empty, Empty>::default(
+            );
         contract.execute(deps, env, info, msg)
     }
 
@@ -61,10 +63,11 @@ pub mod entry {
     pub fn query(
         deps: Deps,
         env: Env,
-        msg: QueryMsg<DefaultOptionMetadataExtension>,
+        msg: QueryMsg<DefaultOptionMetadataExtension, Empty>,
     ) -> Result<Binary, ContractError> {
         let contract =
-            Cw721ExpirationContract::<DefaultOptionMetadataExtension, Empty, Empty>::default();
+            Cw721ExpirationContract::<DefaultOptionMetadataExtension, Empty, Empty, Empty>::default(
+            );
         contract.query(deps, env, msg)
     }
 
@@ -130,7 +133,7 @@ mod tests {
 
         assert_eq!(
             1,
-            Cw721ExpirationContract::<DefaultOptionMetadataExtension, Empty, Empty>::default()
+            Cw721ExpirationContract::<DefaultOptionMetadataExtension, Empty, Empty, Empty>::default()
                 .expiration_days
                 .load(deps.as_ref().storage)
                 .unwrap()

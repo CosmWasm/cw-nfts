@@ -9,23 +9,31 @@ use serde::Serialize;
 
 use crate::{error::ContractError, msg::QueryMsg, state::Cw721ExpirationContract};
 
-impl<'a, TMetadataExtension, TCustomResponseMessage, TMetadataExtensionMsg>
-    Cw721ExpirationContract<'a, TMetadataExtension, TCustomResponseMessage, TMetadataExtensionMsg>
+impl<'a, TMetadataExtension, TCustomResponseMessage, TMetadataExtensionMsg, TQueryExtensionMsg>
+    Cw721ExpirationContract<
+        'a,
+        TMetadataExtension,
+        TCustomResponseMessage,
+        TMetadataExtensionMsg,
+        TQueryExtensionMsg,
+    >
 where
     TMetadataExtension: Serialize + DeserializeOwned + Clone,
     TCustomResponseMessage: CustomMsg,
     TMetadataExtensionMsg: CustomMsg,
+    TQueryExtensionMsg: Serialize + DeserializeOwned + Clone,
 {
     pub fn query(
         &self,
         deps: Deps,
         env: Env,
-        msg: QueryMsg<TMetadataExtension>,
+        msg: QueryMsg<TMetadataExtension, TQueryExtensionMsg>,
     ) -> Result<Binary, ContractError> {
         let contract = Cw721ExpirationContract::<
             TMetadataExtension,
             TCustomResponseMessage,
             TMetadataExtensionMsg,
+            TQueryExtensionMsg,
         >::default();
         match msg {
             // -------- msgs with `include_expired_nft` prop --------
@@ -169,7 +177,7 @@ where
             QueryMsg::Minter {} => Ok(to_json_binary(
                 &contract.base_contract.query_minter(deps.storage)?,
             )?),
-            QueryMsg::Extension { msg } => Ok(to_json_binary(
+            QueryMsg::Extension { msg, .. } => Ok(to_json_binary(
                 &contract.base_contract.query_extension(deps, env, msg)?,
             )?),
             QueryMsg::GetWithdrawAddress {} => Ok(to_json_binary(

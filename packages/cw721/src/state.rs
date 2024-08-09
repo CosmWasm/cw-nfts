@@ -22,9 +22,12 @@ pub struct Cw721Config<
     TCustomResponseMessage,
     // Message passed for updating metadata.
     TMetadataExtensionMsg,
+    // Extension query message.
+    TQueryExtensionMsg,
 > where
     TMetadataExtension: Serialize + DeserializeOwned + Clone,
     TMetadataExtensionMsg: CustomMsg,
+    TQueryExtensionMsg: Serialize + DeserializeOwned + Clone,
 {
     /// Note: replaces deprecated/legacy key "nft_info"!
     pub collection_info: Item<'a, CollectionInfo>,
@@ -38,13 +41,21 @@ pub struct Cw721Config<
 
     pub(crate) _custom_response: PhantomData<TCustomResponseMessage>,
     pub(crate) _custom_execute: PhantomData<TMetadataExtensionMsg>,
+    pub(crate) _custom_query: PhantomData<TQueryExtensionMsg>,
 }
 
-impl<TMetadataExtension, TCustomResponseMessage, TMetadataExtensionMsg> Default
-    for Cw721Config<'static, TMetadataExtension, TCustomResponseMessage, TMetadataExtensionMsg>
+impl<TMetadataExtension, TCustomResponseMessage, TMetadataExtensionMsg, TQueryExtensionMsg> Default
+    for Cw721Config<
+        'static,
+        TMetadataExtension,
+        TCustomResponseMessage,
+        TMetadataExtensionMsg,
+        TQueryExtensionMsg,
+    >
 where
     TMetadataExtension: Serialize + DeserializeOwned + Clone,
     TMetadataExtensionMsg: CustomMsg,
+    TQueryExtensionMsg: Serialize + DeserializeOwned + Clone,
 {
     fn default() -> Self {
         Self::new(
@@ -58,11 +69,18 @@ where
     }
 }
 
-impl<'a, TMetadataExtension, TCustomResponseMessage, TMetadataExtensionMsg>
-    Cw721Config<'a, TMetadataExtension, TCustomResponseMessage, TMetadataExtensionMsg>
+impl<'a, TMetadataExtension, TCustomResponseMessage, TMetadataExtensionMsg, TQueryExtensionMsg>
+    Cw721Config<
+        'a,
+        TMetadataExtension,
+        TCustomResponseMessage,
+        TMetadataExtensionMsg,
+        TQueryExtensionMsg,
+    >
 where
     TMetadataExtension: Serialize + DeserializeOwned + Clone,
     TMetadataExtensionMsg: CustomMsg,
+    TQueryExtensionMsg: Serialize + DeserializeOwned + Clone,
 {
     fn new(
         collection_info_key: &'a str,
@@ -83,6 +101,7 @@ where
             withdraw_address: Item::new(withdraw_address_key),
             _custom_response: PhantomData,
             _custom_execute: PhantomData,
+            _custom_query: PhantomData,
         }
     }
 

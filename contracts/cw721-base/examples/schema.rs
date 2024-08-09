@@ -18,6 +18,6 @@ fn main() {
         &out_dir,
         "ExecuteMsg",
     );
-    export_schema_with_title(&schema_for!(QueryMsg<Empty>), &out_dir, "QueryMsg");
+    export_schema_with_title(&schema_for!(QueryMsg<Empty, Empty>), &out_dir, "QueryMsg");
     export_schema_with_title(&schema_for!(MigrateMsg), &out_dir, "MigrateMsg");
 }
